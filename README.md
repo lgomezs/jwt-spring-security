@@ -12,7 +12,7 @@ the class main is WebSecurityConfig.
 
 endpoint for login: /api/auth/login 
 	
-	![Screenshot](img/login.png?raw=true "Screenshot JWT Spring Security Demo")
+![Screenshot from running application](img/login.png?raw=true "Screenshot JWT Spring Security Demo")
 
 # Requirements
 
