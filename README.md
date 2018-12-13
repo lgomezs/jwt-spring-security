@@ -18,6 +18,14 @@ endpoint for login: /api/auth/login
 
   This application is build with maven 3, Java 8, MongoDB (in this demo for mongo connection, I used mlab). 
 
+# Dependency
+
+  For connection with mongo require the artifactId mongodb:
+  
+  GitHub (compile y generate artifact): 
+  
+  	https://github.com/lgomezs/appcore-mongodb 	
+	
 # Configuration
 
  - Configure mongdb -> config-default.properties
