@@ -1,0 +1,26 @@
+[
+  {
+    "codUsuario": "001",
+    "rolCod": "1",
+    "feIniVige": "2010-07-20T23:23:50Z",
+    "feFinVige": "2010-07-20T23:23:50Z",
+    "stUsuaRol": 1,
+    "stRegi": 1
+  },
+  {
+    "codUsuario": "003",
+    "rolCod": "2",
+    "feIniVige": "2018-07-20T23:23:50Z",
+    "feFinVige": "2019-07-20T23:23:50Z",
+    "stUsuaRol": 1,
+    "stRegi": 1
+  },
+  {
+    "codUsuario": "002",
+    "rolCod": "1",
+    "feIniVige": "2018-07-20T23:23:50Z",
+    "feFinVige": "2019-07-20T23:23:50Z",
+    "stUsuaRol": 1,
+    "stRegi": 1
+  }
+]

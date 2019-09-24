@@ -24,7 +24,7 @@ public class RolServiceImpl extends AbstractCommand<Rol, GetRolRequest> implemen
 
 	@Override
 	public Mono<Rol> doExecute(GetRolRequest request) {	
-		return null;
+		return reactiveRespositoryRol.insert(createRol(request));
 	}
 
 	@Override

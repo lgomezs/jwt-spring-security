@@ -1,0 +1,24 @@
+[
+  {
+    "codUsuario": "001",
+    "img": "https://lh5.googleusercontent.com/-p_bl7PPxdtc/AAAAAAAAAAI/AAAAAAAAA_w/zYhAfe-I40w/s96-c/photo.jpg",
+    "password": "$2a$10$Rg28SCXy7S3utK7GLUeDte.K4NnzKGlKi.q.hlYmtqDaXoBgJ9nDi",
+    "email": "lgome@gmail.com",
+    "nombre": "Luis Miguel Gomez  Saavedra",
+    "google": false,
+    "role": "USER_ROLE",
+    "__v": 0,
+    "stUsua": "1"
+  },
+  {
+    "codUsuario": "002",
+    "img": "https://lh5.googleusercontent.com/-p_bl7PPxdtc/AAAAAAAAAAI/AAAAAAAAA_w/zYhAfe-I40w/s96-c/photo.jpg",
+    "password": "password",
+    "email": "lmgomez.saavedra@gmail.com",
+    "nombre": "Luis Miguel Gomez  Saavedra",
+    "google": true,
+    "role": "ADMIN_ROLE",
+    "__v": 0,
+    "stUsua": "1"
+  }
+]

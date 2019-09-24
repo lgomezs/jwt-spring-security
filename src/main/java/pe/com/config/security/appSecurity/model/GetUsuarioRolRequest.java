@@ -11,7 +11,11 @@ public class GetUsuarioRolRequest {
 
 	private String codUsuario;
 	private String loginUsuario;
-	private String codRol;
+	private Integer codRol;
+	private String feIniVige;
+	private String feFinVige;
+	private int stUsuaRol;
+	private int stRegi;
 	
 	public GetUsuarioRolRequest() {}
 	

@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface Command<T, ID> {
 
-	 	Mono<T> execute(ID request);
+	 	  Mono<T> execute(ID request);
 
 	    Flux<T> executeList(ID request);
 	    

@@ -9,14 +9,12 @@ the class main is WebSecurityConfig.
 	- Require the user to be authenticated prior to accessing any URL within our application.
 	- Require a user with the username, password and roles.
 	
-
-endpoint for login: /api/auth/login 
-	
-![Screenshot from running application](img/login.png?raw=true "Screenshot JWT Spring Security Demo")
-
 # Requirements
 
-  This application is build with maven 3, Java 8, MongoDB (in this demo for mongo connection, I used mlab). 
+  This application is build with:
+        - maven 3
+        - Java 8
+        - docker v18.09.2
 
 # Dependency
 
@@ -24,7 +22,9 @@ endpoint for login: /api/auth/login
   
   GitHub (compile y generate artifact): 
   
-  	https://github.com/lgomezs/appcore-mongodb 	
+  	git clone https://github.com/lgomezs/appcore-mongodb
+  	cd appcore-mongodb
+  	mvn clean install
 	
 # Configuration
 
@@ -36,13 +36,36 @@ endpoint for login: /api/auth/login
 
    mvn clean install -Dmaven.test.skip=true -Dfindbugs.skip=true -Dpmd.skip=true
 
-# Running
+# Running with docker
 
-   Just start the application with the Spring Boot maven plugin (mvn spring-boot:run) o execute class AppSecurityApplication.	
-   The application is running at http://localhost:8200
-   
-# Docker
+  ##Run mongo
+  
+    docker volume create --name=mongodbdata
+    docker-compose up mongo
+  
+  ![Screenshot from running application](img/mongo.png?raw=true "Mongo start")
+
+  
+  ##Run scripts (data)
+  
+    docker-compose build mongo_se
+    docker-compose up mongo_se
+  
+  ![Screenshot from running application](img/data.png?raw=true "Mongo start")
 
 
-   
-
+  ##Run application
+        
+   docker-compose build jwt-spring-security
+   docker-compose up jwt-spring-security
+     
+  http://localhost:8080/api/auth/login
+    	
+    	
+  ![Screenshot from running application](img/post_auth.png?raw=true "Screenshot JWT Spring Security Demo")
+  
+  
+  
+  ![Screenshot from running application](img/login.png?raw=true "Screenshot JWT Spring Security Demo")
+  
+  

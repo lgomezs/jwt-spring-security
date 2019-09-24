@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class UsuarioRol {
 	@Field("codUsuario")
 	private String codUsuario;
 	private int rolCod;	
-	private String feIniVige;	
+	private String feIniVige;
 	private String feFinVige;
 	private int stUsuaRol;
 	private int stRegi;

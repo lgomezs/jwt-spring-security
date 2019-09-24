@@ -1,0 +1,26 @@
+[
+  {
+    "rolCodigo": 1,
+    "nombreRol": "ADMINISTRADOR",
+    "descripcionRol": "Administrador de aplicacion",
+    "tipoRol": "admin",
+    "estadoRol": 1,
+    "estadoRegi": 1
+  },
+  {
+    "rolCodigo": 2,
+    "nombreRol": "OPERADOR_ADMIN",
+    "descripcionRol": "Operador de mantenimiento ",
+    "tipoRol": "admin",
+    "estadoRol": 1,
+    "estadoRegi": 1
+  },
+  {
+    "rolCodigo": 3,
+    "nombreRol": "SUPERVISOR_ADMIN",
+    "descripcionRol": "Supervisor de batch",
+    "tipoRol": "Supervisor",
+    "estadoRol": 1,
+    "estadoRegi": 1
+  }
+]

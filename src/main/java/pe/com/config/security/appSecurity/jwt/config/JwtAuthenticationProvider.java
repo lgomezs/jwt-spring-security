@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -28,57 +30,60 @@ import pe.com.config.security.appSecurity.service.UsuarioService;
 import reactor.core.publisher.Flux;
 
 
-
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-	private final JwtSettings jwtSettings;	 
-	@Autowired
-    private UsuarioService usuarioService;
-	@Autowired
-	private UsuarioRolService usuarioRolService;
-	@Autowired
-	private RolService rolsService;
-    
-    @Autowired
-    public JwtAuthenticationProvider(JwtSettings jwtSettings) {
-        this.jwtSettings = jwtSettings;
-    }
-    
-    @Cacheable
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+  private static Logger logger = LoggerFactory.getLogger(JwtAuthenticationProvider.class);
 
-        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
-              
-        Usuario user = usuarioService.findById(jwsClaims.getBody().getSubject()).blockOptional().orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + jwsClaims));
-        
-        //se reuperan los roles
-        Flux<UsuarioRol>  listtUsuarioRol= usuarioRolService.findByUsuarioCodAndStUsuaRol(user.getCodUsuario(), user.getStUsua());
-                          
-        if(listtUsuarioRol!=null && listtUsuarioRol.count().block()>0) {	
-        	List<Rol> listRol=new ArrayList<Rol>();  
-        	
-        	for(UsuarioRol _usuarioRol:listtUsuarioRol.collectList().block()) {   
-        		listRol.add(rolsService.findByRolCodAndStRol(_usuarioRol.getRolCod(), _usuarioRol.getStRegi()).block());
-        	}
-        	 
-        	List<GrantedAuthority> authorities = listRol.stream()
-                    .map(authority -> new SimpleGrantedAuthority(authority.getNoRol()))
-                    .collect(Collectors.toList());        	
-      
-            UserContext userContext = UserContext.create(user, authorities);            
-            
-            return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
-                       
-        }else {
-        	throw new InsufficientAuthenticationException("Usuario no tiene sistemas asignados");
-        }          
-    }
+  private final JwtSettings jwtSettings;
+  @Autowired
+  private UsuarioService usuarioService;
+  @Autowired
+  private UsuarioRolService usuarioRolService;
+  @Autowired
+  private RolService rolsService;
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+  @Autowired
+  public JwtAuthenticationProvider(JwtSettings jwtSettings) {
+    this.jwtSettings = jwtSettings;
+  }
+
+  @Cacheable
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+
+    Jws<Claims> jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
+
+    Usuario user = usuarioService.findById(jwsClaims.getBody().getSubject()).blockOptional().orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + jwsClaims));
+
+    //se reuperan los roles
+    Flux<UsuarioRol> listtUsuarioRol = usuarioRolService.findByUsuarioCodAndStUsuaRol(user.getCodUsuario(), user.getStUsua());
+
+    if (listtUsuarioRol != null && listtUsuarioRol.count().block() > 0) {
+      List<Rol> listRol = new ArrayList<Rol>();
+
+      for (UsuarioRol _usuarioRol : listtUsuarioRol.collectList().block()) {
+        listRol.add(rolsService.findByRolCodAndStRol(_usuarioRol.getRolCod(), _usuarioRol.getStRegi()).block());
+      }
+
+
+
+      List<GrantedAuthority> authorities = listRol.stream()
+        .map(authority -> new SimpleGrantedAuthority(authority.getNoRol()))
+        .collect(Collectors.toList());
+
+      UserContext userContext = UserContext.create(user, authorities);
+
+      return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
+
+    } else {
+      throw new InsufficientAuthenticationException("Usuario no tiene sistemas asignados");
     }
+  }
+
+  @Override
+  public boolean supports(Class<?> authentication) {
+    return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+  }
 }

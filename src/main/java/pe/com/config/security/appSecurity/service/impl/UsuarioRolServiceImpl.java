@@ -11,6 +11,8 @@ import pe.com.config.security.appSecurity.service.UsuarioRolService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 @Service
 public class UsuarioRolServiceImpl extends AbstractCommand<UsuarioRol, GetUsuarioRolRequest> implements UsuarioRolService{
 	
@@ -20,19 +22,16 @@ public class UsuarioRolServiceImpl extends AbstractCommand<UsuarioRol, GetUsuari
 	
 	@Override
 	public Mono<UsuarioRol> doExecute(GetUsuarioRolRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return reactiveRespositoryUsuarioRol.insert(createUsuarioRol(request));
 	}
 
 	@Override
 	public Flux<UsuarioRol> doExecuteList(GetUsuarioRolRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return reactiveRespositoryUsuarioRol.findAll();
 	}
 
 	@Override
 	public Mono<Void> doDelete(GetUsuarioRolRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -40,5 +39,17 @@ public class UsuarioRolServiceImpl extends AbstractCommand<UsuarioRol, GetUsuari
 	public Flux<UsuarioRol> findByUsuarioCodAndStUsuaRol(String codUsuario, int stUsuaRol) {		
 		return reactiveRespositoryUsuarioRol.findByCodUsuarioAndStUsuaRol(codUsuario,stUsuaRol);
 	}
+
+	public UsuarioRol createUsuarioRol(GetUsuarioRolRequest request){
+      return UsuarioRol.builder()
+        .codUsuario(request.getCodUsuario())
+        .rolCod(request.getCodRol())
+        .stUsuaRol(request.getStUsuaRol())
+        .stRegi(request.getStRegi())
+        .feIniVige(request.getFeIniVige())
+        .feFinVige(request.getFeFinVige())
+      .build();
+
+  }
 
 }

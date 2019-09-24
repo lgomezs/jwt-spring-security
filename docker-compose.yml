@@ -1,0 +1,58 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: mongo
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    environment:
+      - MONGO_INITDB_DATABASE=seguridad
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - some-net
+  mongo_se:
+    build: .
+    environment:
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+    depends_on:
+      - mongo
+    command: [
+      sh -c " mongoimport --host mongo --port 27017 --username admin --password  admin --db admin --collection Roles --authenticationDatabase admin --file /usr/src/app/Rol.json --type json --jsonArray
+      && mongoimport --host mongo --port 27017 --username admin --password  admin --db admin --collection usuarios  --authenticationDatabase admin --file /usr/src/app/Usuario.json --type json --jsonArray
+      && mongoimport --host mongo --port 27017 --username admin --password  admin --db admin --collection UsuarioRol --authenticationDatabase admin --file /usr/src/app/Usuario_rol.json --type json --jsonArray"
+    ]
+    networks:
+      - some-net
+  jwt-spring-security:
+    image: "jwt-spring-security"
+    build:
+      dockerfile: Dockerfileapp
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    networks:
+      - some-net
+
+volumes:
+  # default dir on Ubuntu: /var/lib/docker/volumes
+  mongodb:
+  mongoconfig:
+
+networks:
+  some-net:
+    driver: bridge
