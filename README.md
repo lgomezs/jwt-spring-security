@@ -56,8 +56,8 @@ the class main is WebSecurityConfig.
 
   ##Run application
         
-   docker-compose build jwt-spring-security
-   docker-compose up jwt-spring-security
+    docker-compose build jwt-spring-security
+    docker-compose up jwt-spring-security
      
   http://localhost:8080/api/auth/login
     	
